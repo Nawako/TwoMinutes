@@ -8,8 +8,9 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.TextView;
+
+import com.kilomobi.twominutes.Chronometer.AnalogChronometer;
 
 /**
  * Created by macbookpro on 06/10/2015.

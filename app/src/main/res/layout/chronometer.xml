@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"/>
 
 
-    <com.kilomobi.twominutes.AnalogChronometer
+    <com.kilomobi.twominutes.Chronometer.AnalogChronometer
         android:id="@+id/aChronometer"
         android:layout_margin="16dp"
         android:layout_below="@id/tvArrive"

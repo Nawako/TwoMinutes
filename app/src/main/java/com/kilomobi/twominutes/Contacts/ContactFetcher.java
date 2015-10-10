@@ -15,9 +15,13 @@ import java.util.Map;
 public class ContactFetcher {
 
     private final Context context;
+    private final String criteria_fav;
+    private final String[] criteria_arg;
 
     public ContactFetcher(Context c) {
         this.context = c;
+        criteria_fav =  "starred=?";
+        criteria_arg = new String[] {"1"};
     }
 
     public ArrayList<Contact> fetchAll() {
@@ -29,18 +33,10 @@ public class ContactFetcher {
         CursorLoader cursorLoader = new CursorLoader(context,
                 ContactsContract.Contacts.CONTENT_URI,
                 projectionFields, // the columns to retrieve
-                null, // the selection criteria (favorites contacts)
-                null, // the selection args (1 = true)
+                criteria_fav, // the selection criteria (favorites contacts)
+                criteria_arg, // the selection args (1 = true)
                 null // the sort order (default)
         );
-
-//        CursorLoader cursorLoader = new CursorLoader(context,
-//                ContactsContract.Contacts.CONTENT_URI,
-//                projectionFields, // the columns to retrieve
-//                "starred=?", // the selection criteria (favorites contacts)
-//                new String[] {"1"}, // the selection args (1 = true)
-//                null // the sort order (default)
-//        );
 
         Cursor c = cursorLoader.loadInBackground();
 
@@ -63,7 +59,7 @@ public class ContactFetcher {
         c.close();
 
         matchContactNumbers(contactsMap);
-        matchContactEmails(contactsMap);
+    //    matchContactEmails(contactsMap);
 
         return listContacts;
     }
@@ -79,8 +75,8 @@ public class ContactFetcher {
         Cursor phone = new CursorLoader(context,
                 Phone.CONTENT_URI,
                 numberProjection,
-                null,
-                null,
+                criteria_fav,
+                criteria_arg,
                 null).loadInBackground();
 
         if (phone.moveToFirst()) {
@@ -117,8 +113,8 @@ public class ContactFetcher {
         Cursor email = new CursorLoader(context,
                 Email.CONTENT_URI,
                 emailProjection,
-                null,
-                null,
+                criteria_fav,
+                criteria_arg,
                 null).loadInBackground();
 
         if (email.moveToFirst()) {
