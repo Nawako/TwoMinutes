@@ -19,6 +19,7 @@ public class ContactsAdapter extends ArrayAdapter<Contact> {
 
 	// Save the clicked favorite contact
 	private int mFavoriteID = -1;
+	private String mFavoritePhoneNumber = "-1";
 	// Get the last row item to change color
 	private RelativeLayout lastRelativeLayout;
 	private TextView lastTextView;
@@ -82,6 +83,9 @@ public class ContactsAdapter extends ArrayAdapter<Contact> {
 				lastRelativeLayout = relativeLayout;
 				lastTextView = tvPhone;
 
+				// getPhone
+				mFavoritePhoneNumber = (String) tvPhone.getText();
+
 				// change color of actual row
 				relativeLayout.setBackgroundResource(R.color.blue_normal);
 				tvPhone.setTextColor(getContext().getResources().getColor(R.color.background_material_light));
@@ -93,6 +97,10 @@ public class ContactsAdapter extends ArrayAdapter<Contact> {
 		view.setOnClickListener(clickedContact);
 
 		return view;
+	}
+
+	public String getmFavoritePhoneNumber() {
+		return mFavoritePhoneNumber;
 	}
 
 	public int getmFavoriteID() {

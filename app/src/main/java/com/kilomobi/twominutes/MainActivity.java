@@ -97,7 +97,7 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
                 if (checkIfButtonPressed() && checkIfContactSelected()) {
                     btnValider.setError(null);
                     btnValider.setEnabled(false);
-                    sendSMS(item_Phone, String.format(getResources().getString(R.string.message), duree));
+                    sendSMS(adapterContacts.getmFavoritePhoneNumber(), String.format(getResources().getString(R.string.message), duree));
                     // no progress
                     progressGenerator.start(btnValider);
                     chronometer.start();
