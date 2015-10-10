@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">2 Min</string>
+    <string name="error">Choose a duration and a contact !</string>
+    <string formatted="false" name="message">Warning !!! I\'m coming in %1$d minutes ! \nSent by app 2 Min</string>
+    <string formatted="false" name="arrive">You took %1%d seconds \nfor your task !</string>
+    <string formatted="false" name="arrive2">You took %1%d min %2%d secondes \nfor your task !</string>
+    <string name="action_settings">Settings</string>
+
+</resources>

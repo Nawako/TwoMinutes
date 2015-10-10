@@ -52,9 +52,9 @@ public class ChronometerActivity extends AppCompatActivity {
                 btnRedo.setVisibility(View.VISIBLE);
                 btnQuit.setVisibility(View.VISIBLE);
                 if (chronometer.getMinutes() > 0)
-                    tvArrive.setText(String.format("Vous avez mis %d min %d [b]secondes[/b] \npour accomplir votre tâche !", chronometer.getMinutes(), chronometer.getSeconds()));
+                    tvArrive.setText(String.format(getResources().getString(R.string.arrive2), chronometer.getMinutes(), chronometer.getSeconds()));
                 else
-                    tvArrive.setText(String.format("Vous avez mis %d secondes \npour accomplir votre tâche !", chronometer.getSeconds()));
+                    tvArrive.setText(String.format(getResources().getString(R.string.arrive), chronometer.getSeconds()));
             }
         });
 

@@ -97,14 +97,14 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
                 if (checkIfButtonPressed() && checkIfContactSelected()) {
                     btnValider.setError(null);
                     btnValider.setEnabled(false);
-                    //        sendSMS(item_Phone, "Attention !!! J'arrive dans " + duree + " minutes !");
+                    sendSMS(item_Phone, String.format(getResources().getString(R.string.message), duree));
                     // no progress
                     progressGenerator.start(btnValider);
                     chronometer.start();
                     chronometer.setBase(SystemClock.elapsedRealtime());
                 } else {
                     btnValider.setError("duree");
-                    Toast.makeText(mContext, "Choisir une durée et un contact !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.error, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -115,13 +115,6 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
         listContacts = new ContactFetcher(this).fetchAll();
         adapterContacts = new ContactsAdapter(this, listContacts);
         mListView.setAdapter(adapterContacts);
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(mContext, "Item position " + i, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override

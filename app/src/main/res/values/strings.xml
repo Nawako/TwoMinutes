@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TwoMinutes</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">2 Min</string>
+    <string name="error">Choisir une durée et un contact !</string>
+    <string formatted="false" name="message">Attention !!! J\'arrive dans %1$d minutes ! \nEnvoyé avec l\'app 2 Min</string>
+    <string formatted="false" name="arrive">Vous avez mis %1%d secondes \npour accomplir votre tâche !</string>
+    <string formatted="false" name="arrive2">Vous avez mis %1%d min %2%d secondes \npour accomplir votre tâche !</string>
+    <string name="action_settings">Paramètres</string>
 
 </resources>
