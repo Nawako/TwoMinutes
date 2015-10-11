@@ -3,9 +3,17 @@
 
     <string name="app_name">2 Min</string>
     <string name="error">Choisir une durée et un contact !</string>
-    <string formatted="false" name="message">Attention !!! J\'arrive dans %1$d minutes ! \nEnvoyé avec l\'app 2 Min</string>
-    <string formatted="false" name="arrive">Vous avez mis %1%d secondes \npour accomplir votre tâche !</string>
-    <string formatted="false" name="arrive2">Vous avez mis %1%d min %2%d secondes \npour accomplir votre tâche !</string>
+    <string formatted="false" name="message">Attention !!! \nJ\'arrive dans %1$d minutes ! \nEnvoyé avec l\'app 2 Min</string>
+    <string formatted="false" name="arrive">Vous avez mis %d secondes \npour accomplir votre tâche !</string>
+    <string formatted="false" name="arrive2">Vous avez mis %d min %d secondes \npour accomplir votre tâche !</string>
     <string name="action_settings">Paramètres</string>
+    <string name="btn_arrive">Je suis arrivé !</string>
+    <string name="redo">Refaire</string>
+    <string name="quit">Quitter</string>
+    <string name="thanks">Merci ! :)</string>
+    <string name="duration">Durée (en minutes)</string>
+    <string name="send">Envoyer</string>
+    <string name="send_in_progress">Envoi en cours...</string>
+    <string name="sent">Fait !</string>
 
 </resources>

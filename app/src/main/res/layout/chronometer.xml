@@ -7,7 +7,9 @@
 
     <TextView
         android:id="@+id/tvArrive"
-        android:text="Vous avez mis % pour accomplir votre tâche !"
+        android:text=""
+        android:textSize="27dp"
+        android:layout_marginBottom="30dp"
         android:textColor="@color/dim_foreground_material_dark"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
@@ -30,14 +32,14 @@
         android:textColor="@android:color/white"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Je suis arrivé !"/>
+        android:text="@string/btn_arrive"/>
 
     <com.dd.processbutton.FlatButton
         android:id="@+id/btn_quit"
         android:layout_below="@id/btn_arrive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quitter"
+        android:text="@string/quit"
         android:textColor="@android:color/white"
         android:visibility="invisible"
         custom:pb_colorNormal="@android:color/holo_blue_light"
@@ -49,7 +51,7 @@
         android:layout_below="@id/btn_arrive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Refaire"
+        android:text="@string/redo"
         android:layout_marginRight="20dp"
         android:visibility="invisible"
         android:textColor="@android:color/white"
@@ -58,7 +60,7 @@
         android:layout_toLeftOf="@id/btn_quit"/>
 
     <TextView
-        android:text="Merci ! :)"
+        android:text="@string/thanks"
         android:id="@+id/tvThanks"
         android:textColor="@color/dim_foreground_material_dark"
         android:layout_marginTop="20dp"

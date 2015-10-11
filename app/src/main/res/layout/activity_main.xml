@@ -38,7 +38,7 @@
             android:layout_marginTop="30dp"
             android:textColor="@color/dim_foreground_material_dark"/>
 
-        <TextView android:text="Durée (en minute) :"
+        <TextView android:text="@string/duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30dp"
@@ -107,15 +107,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="16dp"
-            android:text="Envoyer"
+            android:text="@string/send"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             custom:pb_colorComplete="@color/green_complete"
             custom:pb_colorNormal="@color/blue_normal"
             custom:pb_colorPressed="@color/blue_pressed"
             custom:pb_colorProgress="@color/purple_progress"
-            custom:pb_textComplete="Fait !"
-            custom:pb_textProgress="Envoi en cours.."
+            custom:pb_textComplete="@string/sent"
+            custom:pb_textProgress="@string/send_in_progress"
             custom:pb_textError="Erreur"
             custom:pb_colorError="@color/red_error" />
 

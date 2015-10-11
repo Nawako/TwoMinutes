@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -29,6 +30,9 @@ public class ChronometerActivity extends AppCompatActivity {
         long value = intent.getLongExtra("chrono", SystemClock.elapsedRealtime()); //if it's a string you stored.
 
         setContentView(R.layout.chronometer);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         chronometer = (AnalogChronometer) findViewById(R.id.aChronometer);
         chronometer.setBase(value);
         chronometer.start();
