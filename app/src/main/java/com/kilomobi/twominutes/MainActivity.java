@@ -21,6 +21,12 @@ import com.kilomobi.twominutes.Contacts.Contact;
 import com.kilomobi.twominutes.Contacts.ContactFetcher;
 import com.kilomobi.twominutes.Contacts.ContactsAdapter;
 import com.kilomobi.twominutes.ProgressGenerator.ProgressGenerator;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
 
@@ -50,6 +56,38 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
         mContext = this;
         duree = 0;
         btn_pressed = false;
+
+        /*
+        // Drawer activity
+        //if you want to update the items at a later time it is recommended to keep it in a variable
+        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withName("Drawer Item Home!");
+        SecondaryDrawerItem item2 = new SecondaryDrawerItem().withName("Message");
+        SecondaryDrawerItem item3 = new SecondaryDrawerItem().withName("Drawer Item 3 !");
+
+        //create the drawer and remember the `Drawer` result object
+        Drawer result = new DrawerBuilder()
+                .withActivity(this)
+                .addDrawerItems(
+                        item1,
+                        new DividerDrawerItem(),
+                        item2,
+                        item3,
+                        new SecondaryDrawerItem().withName("Secondary Drawer Item!")
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        // do something with the clicked item :D
+                        Toast.makeText(mContext, "trololo", Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                })
+                .build();
+           */
+
+        // Show the hamburger icon
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+//        result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
 
         mListView = (ListView) findViewById(R.id.lv_contacts);
         btn2 = (FlatButton)findViewById(R.id.btn_2);
@@ -88,9 +126,7 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
         final ProgressGenerator progressGenerator = new ProgressGenerator(this);
         final SubmitProcessButton btnValider = (SubmitProcessButton) findViewById(R.id.btn_valider);
         chronometer = new AnalogChronometer(this);
-
-    //    getContacts();
-
+        
         btnValider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
