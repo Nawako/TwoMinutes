@@ -177,6 +177,10 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
         listContacts = new ContactFetcher(this).fetchAll();
         adapterContacts = new ContactsAdapter(this, listContacts);
         mListView.setAdapter(adapterContacts);
+
+        if (listContacts.size() == 0) {
+            Toast.makeText(mContext, getResources().getString(R.string.no_contacts), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

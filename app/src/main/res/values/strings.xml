@@ -20,5 +20,6 @@
     <string name="send_with">\nEnvoyé avec l\'app 2 Min!</string>
     <string name="message_base">Attention !!! \nJ\'arrive dans</string>
     <string name="settings_result">Résultat :</string>
+    <string name="no_contacts">Vous devez spécifier des contacts favoris dans votre application de contact !</string>
 
 </resources>

@@ -20,5 +20,6 @@
     <string name="send_with">\nSent by app 2 Min!</string>
     <string name="message_base">Warning !!! \nI\'m coming in</string>
     <string name="settings_result">Result :</string>
+    <string name="no_contacts">You need to add some contact as your favorite !</string>
 
 </resources>
