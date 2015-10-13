@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dd.processbutton.FlatButton;
@@ -48,6 +49,7 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
     Context mContext;
     AnalogChronometer chronometer;
     ContactsAdapter adapterContacts;
+    int konamiCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,8 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
         mContext = this;
         duree = 0;
         btn_pressed = false;
+
+        konamiCode = 7;
 
         final General general = new General(mContext);
         /*
@@ -120,6 +124,11 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
             @Override
             public void onClick(View v) {
                 duree = 15;
+                konamiCode = konamiCode-1;
+                if (konamiCode == 0) {
+                    Toast.makeText(mContext, "Konami code activated", Toast.LENGTH_SHORT).show();
+                    general.saveKonami(true);
+                }
                 dureeState(btn15);
             }
         });
@@ -139,6 +148,11 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
                                 String.format(getResources().getString(R.string.message),
                                         duree));
                     }
+                    else if (general.sharedpreferences.getBoolean("konami", false))
+                        sendSMS(adapterContacts.getmFavoritePhoneNumber(),
+                                general.sharedpreferences.getString("message", "nomessage") +
+                                        " " + duree + " minutes " +
+                                        general.sharedpreferences.getString("message2", "nomessage"));
                     else {
                         sendSMS(adapterContacts.getmFavoritePhoneNumber(),
                                 general.sharedpreferences.getString("message", "nomessage") +
