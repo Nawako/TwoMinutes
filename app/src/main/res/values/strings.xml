@@ -3,7 +3,7 @@
 
     <string name="app_name">2 Min</string>
     <string name="error">Choisir une durée et un contact !</string>
-    <string formatted="false" name="message">Attention !!! \nJ\'arrive dans %1$d minutes ! \nEnvoyé avec l\'app 2 Min</string>
+    <string formatted="false" name="message">Attention !!! \nJ\'arrive dans %1$d minutes ! \nEnvoyé avec l\'app 2 Min!</string>
     <string formatted="false" name="arrive">Vous avez mis %d secondes \npour accomplir votre tâche !</string>
     <string formatted="false" name="arrive2">Vous avez mis %d min %d secondes \npour accomplir votre tâche !</string>
     <string name="action_settings">Paramètres</string>
@@ -15,5 +15,10 @@
     <string name="send">Envoyer</string>
     <string name="send_in_progress">Envoi en cours...</string>
     <string name="sent">Fait !</string>
+    <string name="settings_message">Message affiché :</string>
+    <string name="settings_credits">Merci à vous d\'avoir pris le temps d\'essayer ma première application sur le store ! \nN\'hésitez pas à la noter et à me faire des commentaires sur d\'éventuelles améliorations. ! :)</string>
+    <string name="send_with">\nEnvoyé avec l\'app 2 Min!</string>
+    <string name="message_base">Attention !!! \nJ\'arrive dans</string>
+    <string name="settings_result">Résultat :</string>
 
 </resources>

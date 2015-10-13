@@ -3,7 +3,7 @@
 
     <string name="app_name">2 Min</string>
     <string name="error">Choose a duration and a contact !</string>
-    <string formatted="false" name="message">Warning !!! \nI\'m coming in %1$d minutes ! \nSent by app 2 Min</string>
+    <string formatted="false" name="message">Warning !!! \nI\'m coming in %1$d minutes ! \nSent by app 2 Min!</string>
     <string formatted="false" name="arrive">You took %d seconds \nfor your task !</string>
     <string formatted="false" name="arrive2">You took %d min %d secondes \nfor your task !</string>
     <string name="action_settings">Settings</string>
@@ -15,5 +15,10 @@
     <string name="send">Send</string>
     <string name="send_in_progress">Send in progress...</string>
     <string name="sent">Done !</string>
+    <string name="settings_message">Displayed message</string>
+    <string name="settings_credits">Thank you for using my application ! It\'s my first published. I hope you like it ! \nDon\'t hesitate to rate it or comment it. :)</string>
+    <string name="send_with">\nSent by app 2 Min!</string>
+    <string name="message_base">Warning !!! \nI\'m coming in</string>
+    <string name="settings_result">Result :</string>
 
 </resources>

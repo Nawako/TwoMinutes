@@ -57,6 +57,7 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
         duree = 0;
         btn_pressed = false;
 
+        final General general = new General(mContext);
         /*
         // Drawer activity
         //if you want to update the items at a later time it is recommended to keep it in a variable
@@ -133,7 +134,18 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
                 if (checkIfButtonPressed() && checkIfContactSelected()) {
                     btnValider.setError(null);
                     btnValider.setEnabled(false);
-                    sendSMS(adapterContacts.getmFavoritePhoneNumber(), String.format(getResources().getString(R.string.message), duree));
+                    if (general.sharedpreferences.getString("message", "nomessage") == "nomessage") {
+                        sendSMS(adapterContacts.getmFavoritePhoneNumber(),
+                                String.format(getResources().getString(R.string.message),
+                                        duree));
+                    }
+                    else {
+                        sendSMS(adapterContacts.getmFavoritePhoneNumber(),
+                                general.sharedpreferences.getString("message", "nomessage") +
+                                        " " + duree + " minutes " +
+                                general.sharedpreferences.getString("message2", "nomessage") +
+                                getResources().getString(R.string.send_with));
+                    }
                     // no progress
                     progressGenerator.start(btnValider);
                     chronometer.start();
@@ -184,6 +196,11 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
             return false;
         else
             return true;
+    }
+
+    public void settingClicked (View v) {
+        Intent myIntent = new Intent(this, SettingScreen.class);
+        startActivity(myIntent);
     }
 
     @Override
