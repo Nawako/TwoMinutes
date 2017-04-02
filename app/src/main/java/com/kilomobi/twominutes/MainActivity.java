@@ -1,16 +1,22 @@
 package com.kilomobi.twominutes;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.SystemClock;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,12 +28,6 @@ import com.kilomobi.twominutes.Contacts.Contact;
 import com.kilomobi.twominutes.Contacts.ContactFetcher;
 import com.kilomobi.twominutes.Contacts.ContactsAdapter;
 import com.kilomobi.twominutes.ProgressGenerator.ProgressGenerator;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
 
@@ -37,6 +37,8 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
     ArrayList<Contact> listContacts;
     ListView mListView;
     public  MainActivity customListView = null;
+    final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 5;
+    final int MY_PERMISSIONS_REQUEST_SEND_SMS = 6;
 
     int duree;
     boolean btn_pressed;
@@ -136,37 +138,42 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
         final ProgressGenerator progressGenerator = new ProgressGenerator(this);
         final SubmitProcessButton btnValider = (SubmitProcessButton) findViewById(R.id.btn_valider);
         chronometer = new AnalogChronometer(this);
-        
+
         btnValider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkIfButtonPressed() && checkIfContactSelected()) {
-                    btnValider.setError(null);
-                    btnValider.setEnabled(false);
-                    if (general.sharedpreferences.getString("message", "nomessage") == "nomessage") {
-                        sendSMS(adapterContacts.getmFavoritePhoneNumber(),
-                                String.format(getResources().getString(R.string.message),
-                                        duree));
+                if (doesUserHavePermission(Manifest.permission.SEND_SMS)) {
+                    if (checkIfButtonPressed() && checkIfContactSelected()) {
+                        btnValider.setError(null);
+                        btnValider.setEnabled(false);
+                        if (general.sharedpreferences.getString("message", "nomessage") == "nomessage") {
+                            sendSMS(adapterContacts.getmFavoritePhoneNumber(),
+                                    String.format(getResources().getString(R.string.message),
+                                            duree));
+                        }
+                        else if (general.sharedpreferences.getBoolean("konami", false))
+                            sendSMS(adapterContacts.getmFavoritePhoneNumber(),
+                                    general.sharedpreferences.getString("message", "nomessage") +
+                                            " " + duree + " minutes " +
+                                            general.sharedpreferences.getString("message2", "nomessage"));
+                        else {
+                            sendSMS(adapterContacts.getmFavoritePhoneNumber(),
+                                    general.sharedpreferences.getString("message", "nomessage") +
+                                            " " + duree + " minutes " +
+                                            general.sharedpreferences.getString("message2", "nomessage") +
+                                            getResources().getString(R.string.send_with));
+                        }
+                        // no progress
+                        progressGenerator.start(btnValider);
+                        chronometer.start();
+                        chronometer.setBase(SystemClock.elapsedRealtime());
+                    } else {
+                        btnValider.setError("duree");
+                        Toast.makeText(mContext, R.string.error, Toast.LENGTH_SHORT).show();
                     }
-                    else if (general.sharedpreferences.getBoolean("konami", false))
-                        sendSMS(adapterContacts.getmFavoritePhoneNumber(),
-                                general.sharedpreferences.getString("message", "nomessage") +
-                                        " " + duree + " minutes " +
-                                        general.sharedpreferences.getString("message2", "nomessage"));
-                    else {
-                        sendSMS(adapterContacts.getmFavoritePhoneNumber(),
-                                general.sharedpreferences.getString("message", "nomessage") +
-                                        " " + duree + " minutes " +
-                                general.sharedpreferences.getString("message2", "nomessage") +
-                                getResources().getString(R.string.send_with));
-                    }
-                    // no progress
-                    progressGenerator.start(btnValider);
-                    chronometer.start();
-                    chronometer.setBase(SystemClock.elapsedRealtime());
-                } else {
-                    btnValider.setError("duree");
-                    Toast.makeText(mContext, R.string.error, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    requestPermission(Manifest.permission.SEND_SMS, MY_PERMISSIONS_REQUEST_SEND_SMS);
                 }
             }
         });
@@ -174,12 +181,10 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
         customListView = this;
 
         /**************** Create Custom Adapter *********/
-        listContacts = new ContactFetcher(this).fetchAll();
-        adapterContacts = new ContactsAdapter(this, listContacts);
-        mListView.setAdapter(adapterContacts);
-
-        if (listContacts.size() == 0) {
-            Toast.makeText(mContext, getResources().getString(R.string.no_contacts), Toast.LENGTH_LONG).show();
+        if (doesUserHavePermission(Manifest.permission.READ_CONTACTS)) {
+            fetchContact();
+        } else {
+            requestPermission(Manifest.permission.READ_CONTACTS, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
         }
     }
 
@@ -226,6 +231,119 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    private boolean doesUserHavePermission(String permission)
+    {
+        // Assume thisActivity is the current activity
+        int permissionCheck = ContextCompat.checkSelfPermission(this,
+                permission);
+        return permissionCheck == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission(String permission, int idPermission) {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                permission)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    permission)) {
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{permission},
+                        idPermission);
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{permission},
+                        idPermission);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        RelativeLayout rl = (RelativeLayout)findViewById(R.id.rl_main);
+        int customViewTag = 42;
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+                    // If request is cancelled, the result arrays are empty.
+                    if (grantResults.length > 0
+                            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        // permission was granted, yay! Do the
+                        // contacts-related task you need to do.
+                        fetchContact();
+                        if (rl.findViewWithTag(customViewTag) != null) {
+                            rl.removeView(rl.findViewWithTag(customViewTag));
+                        }
+                    } else {
+                        if (rl.findViewWithTag(customViewTag) == null) {
+                            // ----------------------------------------------------------------------
+                            // Placement dans un linear layout pour fixer la permission via un bouton
+                            // ----------------------------------------------------------------------
+                            LinearLayout llPermission = new LinearLayout(this);
+                            llPermission.setOrientation(LinearLayout.HORIZONTAL);
+                            llPermission.setTag(customViewTag);
+
+                            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+                            params.topMargin = 120;
+
+                            // ----------------------------------------------------------------------
+                            // FlatButton pour fix la permission
+                            // ----------------------------------------------------------------------
+                            FlatButton btnFix = new FlatButton(this);
+                            btnFix.setText("Fix");
+                            btnFix.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_blue_light));
+                            btnFix.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    requestPermission(Manifest.permission.READ_CONTACTS, MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+                                }
+                            });
+                            llPermission.addView(btnFix);
+
+                            // ----------------------------------------------------------------------
+                            // Text pour expliquer à l'user
+                            // ----------------------------------------------------------------------
+                            TextView text = new TextView(this);
+                            text.setText("This app require the contacts (read).");
+                            text.setPadding(15,0,15,0);
+                            llPermission.addView(text);
+
+                            rl.addView(llPermission, params);
+                        }
+                    }
+                }
+                break;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+    }
+
+    private void fetchContact() {
+        listContacts = new ContactFetcher(this).fetchAll();
+        adapterContacts = new ContactsAdapter(this, listContacts);
+        mListView.setAdapter(adapterContacts);
+
+        if (listContacts.size() == 0) {
+            Toast.makeText(mContext, getResources().getString(R.string.no_contacts), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
