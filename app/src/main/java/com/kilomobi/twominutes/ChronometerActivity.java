@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,6 +23,8 @@ public class ChronometerActivity extends AppCompatActivity {
     Button btnQuit, btnRedo, btnArrive;
     Activity mActivity;
     Context mContext;
+    boolean isArrived;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,16 +52,25 @@ public class ChronometerActivity extends AppCompatActivity {
         btnArrive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnArrive.setEnabled(false);
-                chronometer.stop();
-                tvArrive.setVisibility(View.VISIBLE);
-                tvThanks.setVisibility(View.VISIBLE);
-                btnRedo.setVisibility(View.VISIBLE);
-                btnQuit.setVisibility(View.VISIBLE);
-                if (chronometer.getMinutes() > 0)
-                    tvArrive.setText(String.format(getResources().getString(R.string.arrive2), chronometer.getMinutes(), chronometer.getSeconds()));
-                else
-                    tvArrive.setText(String.format(getResources().getString(R.string.arrive), chronometer.getSeconds()));
+                if (!isArrived) {
+                    chronometer.stop();
+                    btnArrive.setText("Send SMS");
+                    tvArrive.setVisibility(View.VISIBLE);
+                    tvThanks.setVisibility(View.VISIBLE);
+                    btnRedo.setVisibility(View.VISIBLE);
+                    btnQuit.setVisibility(View.VISIBLE);
+                    if (chronometer.getMinutes() > 0)
+                        tvArrive.setText(String.format(getResources().getString(R.string.arrive2), chronometer.getMinutes(), chronometer.getSeconds()));
+                    else
+                        tvArrive.setText(String.format(getResources().getString(R.string.arrive), chronometer.getSeconds()));
+
+                    isArrived = true;
+                } else {
+                    btnArrive.setText("SMS on the way!");
+                    //sendSMS();
+                    btnArrive.setEnabled(false);
+                }
+
             }
         });
 
@@ -78,5 +90,8 @@ public class ChronometerActivity extends AppCompatActivity {
             }
         });
     }
-
+    private void sendSMS(String phoneNumber, String message) {
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(phoneNumber, null, message, null, null);
+    }
 }

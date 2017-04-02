@@ -44,7 +44,7 @@
         android:visibility="invisible"
         custom:pb_colorNormal="@android:color/holo_blue_light"
         custom:pb_colorPressed="@android:color/holo_blue_dark"
-        android:layout_alignEnd="@id/btn_arrive" />
+        android:layout_alignRight="@id/btn_arrive" />
 
     <com.dd.processbutton.FlatButton
         android:id="@+id/btn_redo"
@@ -64,7 +64,7 @@
         android:id="@+id/tvThanks"
         android:textColor="@color/dim_foreground_material_dark"
         android:layout_marginTop="20dp"
-        android:layout_alignStart="@id/btn_arrive"
+        android:layout_alignLeft="@id/btn_arrive"
         android:layout_below="@id/btn_arrive"
         android:visibility="invisible"
         android:layout_width="wrap_content"
