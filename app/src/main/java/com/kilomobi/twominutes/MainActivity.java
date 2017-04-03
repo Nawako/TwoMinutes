@@ -64,37 +64,7 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
         konamiCode = 7;
 
         final General general = new General(mContext);
-        /*
-        // Drawer activity
-        //if you want to update the items at a later time it is recommended to keep it in a variable
-        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withName("Drawer Item Home!");
-        SecondaryDrawerItem item2 = new SecondaryDrawerItem().withName("Message");
-        SecondaryDrawerItem item3 = new SecondaryDrawerItem().withName("Drawer Item 3 !");
-
-        //create the drawer and remember the `Drawer` result object
-        Drawer result = new DrawerBuilder()
-                .withActivity(this)
-                .addDrawerItems(
-                        item1,
-                        new DividerDrawerItem(),
-                        item2,
-                        item3,
-                        new SecondaryDrawerItem().withName("Secondary Drawer Item!")
-                )
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        // do something with the clicked item :D
-                        Toast.makeText(mContext, "trololo", Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-                })
-                .build();
-           */
-
-        // Show the hamburger icon
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//        result.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
+        final SmsSingleton smsSingleton = SmsSingleton.getInstance();
 
         mListView = (ListView) findViewById(R.id.lv_contacts);
         btn2 = (FlatButton)findViewById(R.id.btn_2);
@@ -146,18 +116,19 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
                     if (checkIfButtonPressed() && checkIfContactSelected()) {
                         btnValider.setError(null);
                         btnValider.setEnabled(false);
+                        smsSingleton.setPhoneNumber(adapterContacts.getmFavoritePhoneNumber());
                         if (general.sharedpreferences.getString("message", "nomessage") == "nomessage") {
-                            sendSMS(adapterContacts.getmFavoritePhoneNumber(),
+                            smsSingleton.sendSMS(adapterContacts.getmFavoritePhoneNumber(),
                                     String.format(getResources().getString(R.string.message),
                                             duree));
                         }
                         else if (general.sharedpreferences.getBoolean("konami", false))
-                            sendSMS(adapterContacts.getmFavoritePhoneNumber(),
+                            smsSingleton.sendSMS(adapterContacts.getmFavoritePhoneNumber(),
                                     general.sharedpreferences.getString("message", "nomessage") +
                                             " " + duree + " minutes " +
                                             general.sharedpreferences.getString("message2", "nomessage"));
                         else {
-                            sendSMS(adapterContacts.getmFavoritePhoneNumber(),
+                            smsSingleton.sendSMS(adapterContacts.getmFavoritePhoneNumber(),
                                     general.sharedpreferences.getString("message", "nomessage") +
                                             " " + duree + " minutes " +
                                             general.sharedpreferences.getString("message2", "nomessage") +
@@ -203,11 +174,6 @@ public class MainActivity extends ActionBarActivity implements ProgressGenerator
         btn15.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
         mButton.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_dark));
         btn_pressed = true;
-    }
-
-    private void sendSMS(String phoneNumber, String message) {
-        SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, message, null, null);
     }
 
     boolean checkIfButtonPressed () {

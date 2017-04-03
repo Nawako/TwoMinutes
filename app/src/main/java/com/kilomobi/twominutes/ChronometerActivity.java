@@ -24,6 +24,7 @@ public class ChronometerActivity extends AppCompatActivity {
     Activity mActivity;
     Context mContext;
     boolean isArrived;
+    final SmsSingleton singleton = SmsSingleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class ChronometerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!isArrived) {
                     chronometer.stop();
-                    btnArrive.setText("Send SMS");
+                    btnArrive.setText(R.string.arrive_btn_text_send);
                     tvArrive.setVisibility(View.VISIBLE);
                     tvThanks.setVisibility(View.VISIBLE);
                     btnRedo.setVisibility(View.VISIBLE);
@@ -66,8 +67,8 @@ public class ChronometerActivity extends AppCompatActivity {
 
                     isArrived = true;
                 } else {
-                    btnArrive.setText("SMS on the way!");
-                    //sendSMS();
+                    btnArrive.setText(R.string.arrive_btn_text);
+                    singleton.sendSMS(singleton.getPhoneNumber(), getString(R.string.arrive_sms_tosend));
                     btnArrive.setEnabled(false);
                 }
 
@@ -89,9 +90,5 @@ public class ChronometerActivity extends AppCompatActivity {
                 finish();
             }
         });
-    }
-    private void sendSMS(String phoneNumber, String message) {
-        SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, message, null, null);
     }
 }
