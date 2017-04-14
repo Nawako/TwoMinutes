@@ -21,5 +21,9 @@
     <string name="message_base">Warning !!! \nI\'m coming in</string>
     <string name="settings_result">Result :</string>
     <string name="no_contacts">You need to add some contact as your favorite !</string>
+    <string name="arrived_btn_text">SMS on the way!</string>
+    <string name="arrive_sms_tosend">I\'m here !</string>
+    <string name="arrive_btn_text_send">Send SMS</string>
+    <string name="arrive_sms_completed">Sms sent!</string>
 
 </resources>

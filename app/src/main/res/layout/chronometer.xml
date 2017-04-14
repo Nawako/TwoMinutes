@@ -32,6 +32,14 @@
         android:textColor="@android:color/white"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        custom:pb_colorComplete="@color/green_complete"
+        custom:pb_colorNormal="@color/blue_normal"
+        custom:pb_colorPressed="@color/blue_pressed"
+        custom:pb_colorProgress="@color/purple_progress"
+        custom:pb_textComplete="@string/sent"
+        custom:pb_textProgress="@string/send_in_progress"
+        custom:pb_textError="Erreur"
+        custom:pb_colorError="@color/red_error"
         android:text="@string/btn_arrive"/>
 
     <com.dd.processbutton.FlatButton

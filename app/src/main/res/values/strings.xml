@@ -21,5 +21,9 @@
     <string name="message_base">Attention !!! \nJ\'arrive dans</string>
     <string name="settings_result">Résultat :</string>
     <string name="no_contacts">Vous devez spécifier des contacts favoris dans votre application de contact !</string>
+    <string name="arrived_btn_text">SMS en cours!</string>
+    <string name="arrive_sms_tosend">Je suis là !</string>
+    <string name="arrive_btn_text_send">Envoyer SMS</string>
+    <string name="arrive_sms_completed">SMS envoyé!</string>
 
 </resources>
